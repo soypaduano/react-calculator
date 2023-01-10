@@ -1,14 +1,15 @@
-import { useState } from 'react'
 import React from 'react'
-import DigitButton from './DigitButton'
-import OperationButton from './OperationButton'
-import './App.css'
+import DigitButton from './Components/DigitButton'
+import OperationButton from './Components/OperationButton'
+import ErrorBoundary from './Components/ErrorHandler/ErrorBoundary'
+import './Styles/App.css'
 
 export const ACTIONS = {
   ADD_DIGIT: 'add-digit',
   CLEAR: 'clear',
   DELETE_DIGIT: 'delete-digit',
   CHOOSE_OPERATION: 'choose-operation',
+  
   EVALUATE: 'evaluate'
 }
 
@@ -26,13 +27,13 @@ function App() {
           currentOperand: `${state.currentOperand || ""}${payload.digit}`
         }
       case ACTIONS.CLEAR:
-        return {}; //Return empty state
+        return {};
       case ACTIONS.CHOOSE_OPERATION:
         if (state.currentOperand == null && state.previousOperand == null) {
           return state;
         }
 
-        if(state.currentOperand == null){
+        if (state.currentOperand == null) {
           return {
             ...state,
             operation: payload.operation
@@ -55,19 +56,11 @@ function App() {
           currentOperand: null
         }
       case ACTIONS.DELETE_DIGIT:
-        if(state.currentOperand == null) return state;
-        if(state.currentOperand.length === 1){
-          return {...state, currentOperand: null}
-        }
-
-
-        return {
-          ...state,
-          currentOperand: state.currentOperand.slice(0, -1)
-        }
-
+        if (state.currentOperand == null) return state;
+        if (state.currentOperand.length === 1) return { ...state, currentOperand: null }
+        return { ...state, currentOperand: state.currentOperand.slice(0, -1) }
       case ACTIONS.EVALUATE:
-        if(state.operation == null && state.currentOperand == null && state.previousOperand == null){
+        if (state.operation == null && state.currentOperand == null && state.previousOperand == null) {
           return state
         }
 
@@ -80,7 +73,7 @@ function App() {
     }
   }
 
-  function evaluate({ currentOperand, previousOperand, operation }) {
+  const evaluate = ({ currentOperand, previousOperand, operation }) => {
     const prev = parseFloat(previousOperand)
     const curr = parseFloat(currentOperand)
 
@@ -100,44 +93,44 @@ function App() {
         computation = prev * curr
         break;
     }
-
     return computation.toString();
-
   }
 
-  function numberWithCommas(x) {
-    if(x != null) return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-}
+  const numberWithCommas = (x) =>  {
+    if (x != null) return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
 
-  
   return (
     <div className="App">
-      <h2>Calculator for InnoCV</h2>
-      <h3>By Sebastian Paduano 🤓 🧮  (2023)</h3>
-      <div className="calculator-grid">
-        <div className="output">
+      <ErrorBoundary>
+        <h2>Calculator for InnoCV</h2>
+        <h3>By <a href="https://www.linkedin.com/in/sebastian-paduano-4810b1136/"> Sebastian Paduano 🤓 🧮  </a> (2023)</h3>
+        <div className="calculator-grid">
+          <div className="output">
           <div className="previous-operand">{numberWithCommas(previousOperand)} {operation}</div>
           <div className="current-operand">{numberWithCommas(currentOperand)}</div>
+          </div>
+          <button onClick={() => dispatch({ type: ACTIONS.CLEAR })} className="span-two">AC</button>
+          <button onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>DEL</button>
+          <OperationButton operation="/" dispatch={dispatch} />
+          <DigitButton digit="1" dispatch={dispatch} />
+          <DigitButton digit="2" dispatch={dispatch} />
+          <DigitButton digit="3" dispatch={dispatch} />
+          <OperationButton operation="*" dispatch={dispatch} />
+          <DigitButton digit="4" dispatch={dispatch} />
+          <DigitButton digit="5" dispatch={dispatch} />
+          <DigitButton digit="6" dispatch={dispatch} />
+          <OperationButton operation="+" dispatch={dispatch} />
+          <DigitButton digit="7" dispatch={dispatch} />
+          <DigitButton digit="8" dispatch={dispatch} />
+          <DigitButton digit="9" dispatch={dispatch} />
+          <OperationButton operation="-" dispatch={dispatch} />
+          <DigitButton digit="." dispatch={dispatch} />
+          <DigitButton digit="0" dispatch={dispatch} />
+          <button onClick={() => dispatch({ type: ACTIONS.EVALUATE })} className="span-two">=</button>
         </div>
-        <button onClick={() => dispatch({ type: ACTIONS.CLEAR })} className="span-two">AC</button>
-        <button onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>DEL</button>
-        <OperationButton operation="/" dispatch={dispatch} />
-        <DigitButton digit="1" dispatch={dispatch} />
-        <DigitButton digit="2" dispatch={dispatch} />
-        <DigitButton digit="3" dispatch={dispatch} />
-        <OperationButton operation="*" dispatch={dispatch} />
-        <DigitButton digit="4" dispatch={dispatch} />
-        <DigitButton digit="5" dispatch={dispatch} />
-        <DigitButton digit="6" dispatch={dispatch} />
-        <OperationButton operation="+" dispatch={dispatch} />
-        <DigitButton digit="7" dispatch={dispatch} />
-        <DigitButton digit="8" dispatch={dispatch} />
-        <DigitButton digit="9" dispatch={dispatch} />
-        <OperationButton operation="-" dispatch={dispatch} />
-        <DigitButton digit="." dispatch={dispatch} />
-        <DigitButton digit="0" dispatch={dispatch} />
-        <button onClick={() => dispatch({ type: ACTIONS.EVALUATE })} className="span-two">=</button>
-      </div>
+        <h4>Built with Vite</h4>
+      </ErrorBoundary>
     </div>
   )
 }
