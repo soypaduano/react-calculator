@@ -10,6 +10,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
@@ -18,16 +19,18 @@ body {
   background: linear-gradient(to right, #40798C, #CFE0C3);
   width: 100%;
 }
+
 a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
+  &:hover{
+    color: #535bf2;
+  }
 }
-a:hover {
-  color: #535bf2;
-}
+
 button {
-  border: 1px solid #c8cbec;
+  border: 1px solid #c8cbec;;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
@@ -35,17 +38,17 @@ button {
   background-color: #3f3f3f;
   cursor: pointer;
   transition: border-color 0.25s;
+  &:hover{
+    border-color: #d5d7f3;
+    background-color: #d5d7f3;
+    opacity: 0.5;
+    color: black;
+  }
+  &:focus,:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
 }
-button:hover {
-  border-color: #d5d7f3;
-  background-color: #d5d7f3;
-  opacity: 0.5;
-  color: black;
-}
-button:focus,
-button :focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -58,27 +61,32 @@ button :focus-visible {
     background-color: #f9f9f9;
   }
 }
-#root {
+
+#root{
   width: 100%;
 }
-.App {
+
+.App{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center
 }
+
 .calculator-grid {
   display: grid;
   margin-top: 2rem;
   grid-template-columns: repeat(4, 6rem);
   grid-template-rows: minmax(7rem, auto);
 }
-.span-two {
+
+.span-two{
   grid-column: span 2;
 }
-.output {
+
+.output{
   grid-column: 1 / -1;
-  background-color: #3a3a3a;
+  background-color: rgb(58, 58, 58, 0.4);
   display: flex;
   flex-direction: column;
   text-align: right;
@@ -86,11 +94,12 @@ button :focus-visible {
   padding: 10px;
   color: white;
   border-radius: 10px 10px 0px 0px;
+  div{
+    margin: 10px;
+    overflow-wrap: break-word;
+  }
 }
-.output div {
-  margin: 10px;
-  overflow-wrap: break-word;
-}
-.previous-operand {
+
+.previous-operand{
   font-size: 1.3rem;
 }

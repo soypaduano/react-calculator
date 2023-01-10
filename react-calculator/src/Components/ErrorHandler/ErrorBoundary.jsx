@@ -23,7 +23,6 @@ class ErrorBoundary extends React.Component {
         return (
             <div>
               Ups, ha habido un error.
-              {this.state.errorDesc}
             </div>
         ) 
       }

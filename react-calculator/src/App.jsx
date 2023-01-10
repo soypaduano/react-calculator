@@ -2,14 +2,13 @@ import React from 'react'
 import DigitButton from './Components/DigitButton'
 import OperationButton from './Components/OperationButton'
 import ErrorBoundary from './Components/ErrorHandler/ErrorBoundary'
-import './Styles/App.css'
+import './Styles/App.less'
 
 export const ACTIONS = {
   ADD_DIGIT: 'add-digit',
   CLEAR: 'clear',
   DELETE_DIGIT: 'delete-digit',
   CHOOSE_OPERATION: 'choose-operation',
-  
   EVALUATE: 'evaluate'
 }
 
@@ -73,7 +72,8 @@ function App() {
     }
   }
 
-  const evaluate = ({ currentOperand, previousOperand, operation }) => {
+  function evaluate({ currentOperand, previousOperand, operation }) {
+
     const prev = parseFloat(previousOperand)
     const curr = parseFloat(currentOperand)
 
@@ -96,7 +96,7 @@ function App() {
     return computation.toString();
   }
 
-  const numberWithCommas = (x) =>  {
+  function numberWithCommas(x) {
     if (x != null) return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   }
 
