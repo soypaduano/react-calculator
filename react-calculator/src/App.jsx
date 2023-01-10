@@ -97,7 +97,10 @@ function App() {
   }
 
   function numberWithCommas(x) {
-    if (x != null) return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    if (x != null) {
+      if(x % 1 != 0) x = parseFloat(x).toFixed(3);
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
   }
 
   return (
