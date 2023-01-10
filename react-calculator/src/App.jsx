@@ -28,9 +28,15 @@ function App() {
       case ACTIONS.CLEAR:
         return {}; //Return empty state
       case ACTIONS.CHOOSE_OPERATION:
-        debugger;
         if (state.currentOperand == null && state.previousOperand == null) {
           return state;
+        }
+
+        if(state.currentOperand == null){
+          return {
+            ...state,
+            operation: payload.operation
+          }
         }
 
         if (state.previousOperand == null) {
@@ -48,11 +54,29 @@ function App() {
           operation: payload.operation,
           currentOperand: null
         }
-        break;
       case ACTIONS.DELETE_DIGIT:
-        return state;
+        if(state.currentOperand == null) return state;
+        if(state.currentOperand.length === 1){
+          return {...state, currentOperand: null}
+        }
+
+
+        return {
+          ...state,
+          currentOperand: state.currentOperand.slice(0, -1)
+        }
+
       case ACTIONS.EVALUATE:
-        return state;
+        if(state.operation == null && state.currentOperand == null && state.previousOperand == null){
+          return state
+        }
+
+        return {
+          ...state,
+          previousOperand: null,
+          operation: null,
+          currentOperand: evaluate(state)
+        }
     }
   }
 
@@ -81,18 +105,22 @@ function App() {
 
   }
 
+  function numberWithCommas(x) {
+    if(x != null) return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
 
-
-
+  
   return (
     <div className="App">
+      <h2>Calculator for InnoCV</h2>
+      <h3>By Sebastian Paduano 🤓 🧮  (2023)</h3>
       <div className="calculator-grid">
         <div className="output">
-          <div className="previous-operand">{previousOperand} {operation}</div>
-          <div className="current-operand">{currentOperand}</div>
+          <div className="previous-operand">{numberWithCommas(previousOperand)} {operation}</div>
+          <div className="current-operand">{numberWithCommas(currentOperand)}</div>
         </div>
         <button onClick={() => dispatch({ type: ACTIONS.CLEAR })} className="span-two">AC</button>
-        <button>DEL</button>
+        <button onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>DEL</button>
         <OperationButton operation="/" dispatch={dispatch} />
         <DigitButton digit="1" dispatch={dispatch} />
         <DigitButton digit="2" dispatch={dispatch} />
@@ -108,7 +136,7 @@ function App() {
         <OperationButton operation="-" dispatch={dispatch} />
         <DigitButton digit="." dispatch={dispatch} />
         <DigitButton digit="0" dispatch={dispatch} />
-        <button className="span-two">=</button>
+        <button onClick={() => dispatch({ type: ACTIONS.EVALUATE })} className="span-two">=</button>
       </div>
     </div>
   )

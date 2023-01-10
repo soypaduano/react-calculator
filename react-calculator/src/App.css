@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background: linear-gradient(to right, #0090C1, #577399);
+  background: linear-gradient(to right, #40798C, #CFE0C3);
   width: 100%;
 }
 
@@ -28,17 +28,20 @@ body {
 
 .output{
   grid-column: 1 / -1;
-  background-color: rgb(58, 58, 58, 0.7);
+  background-color: rgb(58, 58, 58, 0.4);
   display: flex;
   flex-direction: column;
   text-align: right;
   font-size: 2rem;
   padding: 10px;
   color: white;
+  border-radius: 10px 10px 0px 0px;
 }
 
 .output div {
   margin: 10px;
+  line-height: 45px;
+  overflow-wrap: break-word;
 }
 
 .previous-operand{
