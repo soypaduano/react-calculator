@@ -2,15 +2,8 @@ import React from 'react'
 import DigitButton from './Components/DigitButton'
 import OperationButton from './Components/OperationButton'
 import ErrorBoundary from './Components/ErrorHandler/ErrorBoundary'
+import {ACTIONS} from './Components/Utils'
 import './Styles/App.less'
-
-export const ACTIONS = {
-  ADD_DIGIT: 'add-digit',
-  CLEAR: 'clear',
-  DELETE_DIGIT: 'delete-digit',
-  CHOOSE_OPERATION: 'choose-operation',
-  EVALUATE: 'evaluate'
-}
 
 function App() {
 
