@@ -51,6 +51,7 @@ button {
 button:hover {
   border-color: #d5d7f3;
   background-color: #d5d7f3;
+  opacity: 0.5;
   color: black;
 }
 button:focus,
